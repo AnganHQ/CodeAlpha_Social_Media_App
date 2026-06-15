@@ -8,6 +8,9 @@ from "react-router-dom";
 import {useEffect}
 from "react";
 
+import UserProfile
+from "./pages/UserProfile";
+
 import Users
 from "./pages/Users";
 
@@ -58,6 +61,19 @@ return(
 <Navbar/>
 
 <Routes>
+
+<Route
+path="/users/:id"
+element={
+
+<ProtectedRoute>
+
+<UserProfile/>
+
+</ProtectedRoute>
+
+}
+/>
 
 <Route
 path="/users"

@@ -4,6 +4,11 @@ useState
 }
 from "react";
 
+import {
+Link
+}
+from "react-router-dom";
+
 import API
 from "../services/api";
 
@@ -15,6 +20,12 @@ setUsers
 ]=
 useState([]);
 
+const [
+loading,
+setLoading
+]=
+useState(true);
+
 useEffect(()=>{
 
 fetchUsers();
@@ -23,6 +34,8 @@ fetchUsers();
 
 const fetchUsers =
 async()=>{
+
+try{
 
 const res =
 await API.get(
@@ -33,13 +46,50 @@ setUsers(
 res.data
 );
 
+}
+catch(error){
+
+console.log(
+error
+);
+
+}
+finally{
+
+setLoading(
+false
+);
+
+}
+
 };
+
+if(
+loading
+){
 
 return(
 
 <div
-className=
-"container"
+className="container"
+>
+
+<p>
+
+Loading users...
+
+</p>
+
+</div>
+
+);
+
+}
+
+return(
+
+<div
+className="container"
 >
 
 <h1>
@@ -50,17 +100,27 @@ Users
 
 {
 
+users.length > 0
+
+?
+
 users.map(
 
 (user)=>(
 
 <div
-className=
-"card"
-
+className="card"
 key={
 user._id
 }
+>
+
+<Link
+to={`/users/${user._id}`}
+style={{
+textDecoration:"none",
+color:"inherit"
+}}
 >
 
 <img
@@ -69,10 +129,14 @@ src={
 user.profilePic
 ||
 
-"https://placehold.co/50"
+"https://placehold.co/80"
 }
 
-width="50"
+alt="profile"
+
+width="80"
+
+height="80"
 
 />
 
@@ -84,11 +148,21 @@ user.username
 
 </h3>
 
+</Link>
+
 </div>
 
 )
 
 )
+
+:
+
+<p>
+
+No users found
+
+</p>
 
 }
 

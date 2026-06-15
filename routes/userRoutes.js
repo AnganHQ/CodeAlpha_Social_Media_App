@@ -9,7 +9,8 @@ express.Router();
 const {
 followUser,
 updateProfile,
-getUsers
+getUsers,
+getUserById
 }
 =
 require(
@@ -30,6 +31,12 @@ protect,
 getUsers
 );
 
+router.get(
+"/:id",
+protect,
+getUserById
+);
+
 router.post(
 
 "/follow/:id",
@@ -39,8 +46,6 @@ protect,
 followUser
 
 );
-
-
 
 router.put(
 
