@@ -1,13 +1,15 @@
 const express =
-require("express");
+require(
+"express"
+);
 
 const router =
 express.Router();
 
 const {
-toggleFollow,
-getMyProfile,
-getUserProfile
+followUser,
+updateProfile,
+getUsers
 }
 =
 require(
@@ -22,22 +24,35 @@ require(
 "../middleware/authMiddleware"
 );
 
+router.get(
+"/",
+protect,
+getUsers
+);
+
 router.post(
-"/follow/:userId",
+
+"/follow/:id",
+
 protect,
-toggleFollow
+
+followUser
+
 );
 
-router.get(
-"/me",
+
+
+router.put(
+
+"/profile",
+
 protect,
-getMyProfile
+
+updateProfile
+
 );
 
-router.get(
-"/profile/:userId",
-getUserProfile
-);
+
 
 module.exports =
 router;
